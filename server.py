@@ -1,16 +1,17 @@
 import os
+import json
 import threading
 from datetime import datetime
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request
 from apscheduler.schedulers.background import BackgroundScheduler
-from main import run as run_scraper
+from main import run as run_scraper, send_whatsapp_report
 
 app = Flask(__name__)
 
-# Track execution status
+# Track status
 status_info = {
     "last_run": None,
-    "last_status": "Not started",
+    "last_status": "Ready",
     "is_running": False,
     "run_count": 0
 }
@@ -37,23 +38,35 @@ def execute_job():
     finally:
         status_info["is_running"] = False
 
-# Schedule job to run automatically every 6 hours
+# Schedule 6-hour cron
 scheduler.add_job(execute_job, 'interval', hours=6, id='rebate_scraper_6h', replace_existing=True)
 scheduler.start()
 
 @app.route("/")
-def index():
+def home():
+    return render_template("index.html")
+
+@app.route("/api/status")
+def get_status():
     job = scheduler.get_job('rebate_scraper_6h')
     next_run = job.next_run_time if job else None
     return jsonify({
         "service": "Winbox/SH Rebate Scraper Web Service",
         "status": "Online",
         "scraper_info": status_info,
-        "schedule": "Every 6 hours",
         "next_scheduled_run": next_run.strftime("%Y-%m-%d %H:%M:%S") if next_run else None
     })
 
-@app.route("/trigger", methods=["GET", "POST"])
+@app.route("/api/data")
+def get_data():
+    file_path = "commission_list.json"
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return jsonify(data)
+    return jsonify([])
+
+@app.route("/api/trigger", methods=["GET", "POST"])
 def manual_trigger():
     if status_info["is_running"]:
         return jsonify({"status": "error", "message": "Scraper is already running!"}), 400
@@ -63,8 +76,25 @@ def manual_trigger():
 
     return jsonify({
         "status": "success",
-        "message": "Manual scraping job triggered in background!"
+        "message": "Scraping job started in background!"
     })
+
+@app.route("/api/send-whatsapp", methods=["GET", "POST"])
+def manual_whatsapp():
+    file_path = "commission_list.json"
+    if not os.path.exists(file_path):
+        return jsonify({"status": "error", "message": "No scraped data found yet!"}), 404
+        
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    whatsapp_target = os.environ.get("WHATSAPP_TARGET", "120363426571241502@g.us")
+    success = send_whatsapp_report(data, whatsapp_target)
+    
+    if success:
+        return jsonify({"status": "success", "message": "WhatsApp report sent successfully!"})
+    else:
+        return jsonify({"status": "error", "message": "Failed to send WhatsApp report."}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))

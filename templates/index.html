@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winbox Live Casino Rebate Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-primary: #6366f1;
+            --accent-secondary: #06b6d4;
+            --accent-hover: #4f46e5;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.625rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+            border: none;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.95;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Status Grid Cards */
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            padding: 1.25rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-header {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 20px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Controls & Filter Bar */
+        .filter-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            padding: 1.25rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.625rem 1rem 0.625rem 2.5rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.625rem 1rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .tab-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            border-color: var(--accent-primary);
+        }
+
+        /* Data Table */
+        .table-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .badge-currency {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-myr {
+            background: rgba(6, 182, 212, 0.15);
+            color: #38bdf8;
+        }
+
+        .badge-usd {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+        }
+
+        .featured-tag {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e293b;
+            border: 1px solid var(--accent-primary);
+            color: #fff;
+            padding: 0.875rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="brand-icon">📊</div>
+                <div>
+                    <h1>Winbox Live Casino Rebates</h1>
+                    <div class="subtitle">Real-time Commission & Rebate Rate Dashboard</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="triggerScraper()">
+                    ⚡ Run Scraper Now
+                </button>
+                <button class="btn" onclick="sendWhatsApp()">
+                    💬 Send to WhatsApp
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="grid-stats">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span>System Status</span>
+                    <span class="status-badge">
+                        <span class="pulse-dot"></span> Online
+                    </span>
+                </div>
+                <div class="stat-value" id="sys-status">Active</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">Total Platforms</div>
+                <div class="stat-value" id="total-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">Last Updated</div>
+                <div class="stat-value" id="last-updated" style="font-size: 1.1rem;">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">Schedule</div>
+                <div class="stat-value" style="font-size: 1.1rem;">Every 6 Hours</div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="filter-section">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search game platform (e.g. BG, EVOLUTION)..." oninput="filterData()">
+            </div>
+            <div class="filter-group">
+                <div>
+                    <button class="tab-btn active" id="tab-featured" onclick="setTab('featured')">Top 10 Featured</button>
+                    <button class="tab-btn" id="tab-all" onclick="setTab('all')">All Platforms</button>
+                </div>
+                <select id="currencyFilter" onchange="filterData()">
+                    <option value="ALL">All Currencies</option>
+                    <option value="MYR">MYR</option>
+                    <option value="USD">USD</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Table Display -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Game Platform</th>
+                        <th>Currency</th>
+                        <th>Shareholder (%)</th>
+                        <th>Superior Cash Player (%)</th>
+                        <th>Cash Player (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr><td colspan="5" style="text-align:center; padding: 2rem; color: var(--text-muted);">Loading data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Notification Message</div>
+
+    <script>
+        let rawData = [];
+        let currentTab = 'featured';
+        const featuredSet = new Set(['BG', 'CHOICE', 'DB CASINO', 'EVOLUTION', 'EZUGI', 'HOTROAD', 'PP LIVE', 'PRETTY GAMING', 'PT LIVE', 'SEXY']);
+
+        async function loadStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                document.getElementById('sys-status').innerText = data.scraper_info.is_running ? 'Scraping...' : 'Active';
+                document.getElementById('last-updated').innerText = data.scraper_info.last_run || 'Just now';
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function loadData() {
+            try {
+                const res = await fetch('/api/data');
+                rawData = await res.json();
+                document.getElementById('total-count').innerText = rawData.length;
+                filterData();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function setTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-featured').classList.toggle('active', tab === 'featured');
+            document.getElementById('tab-all').classList.toggle('active', tab === 'all');
+            filterData();
+        }
+
+        function filterData() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const curr = document.getElementById('currencyFilter').value;
+
+            const filtered = rawData.filter(item => {
+                const matchesSearch = item.game_platform.toLowerCase().includes(search);
+                const matchesCurr = curr === 'ALL' || item.currency === curr;
+                const isFeatured = featuredSet.has(item.game_platform.trim().toUpperCase());
+                const matchesTab = currentTab === 'all' || isFeatured;
+
+                return matchesSearch && matchesCurr && matchesTab;
+            });
+
+            renderTable(filtered);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color: var(--text-muted);">No records found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map(item => {
+                const isFeatured = featuredSet.has(item.game_platform.trim().toUpperCase());
+                const currClass = item.currency === 'MYR' ? 'badge-myr' : 'badge-usd';
+                return `
+                    <tr>
+                        <td>
+                            <strong>${item.game_platform}</strong>
+                            ${isFeatured ? '<span class="featured-tag">Featured</span>' : ''}
+                        </td>
+                        <td><span class="badge-currency ${currClass}">${item.currency}</span></td>
+                        <td>${item.shareholder}</td>
+                        <td>${item.superior_cash_player}</td>
+                        <td>${item.cash_player}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+
+        async function triggerScraper() {
+            showToast("⚡ Scraper job started in background...");
+            try {
+                const res = await fetch('/api/trigger', { method: 'POST' });
+                const data = await res.json();
+                showToast(data.message);
+                setTimeout(loadData, 8000);
+            } catch (e) {
+                showToast("Failed to trigger scraper");
+            }
+        }
+
+        async function sendWhatsApp() {
+            showToast("💬 Sending report to WhatsApp...");
+            try {
+                const res = await fetch('/api/send-whatsapp', { method: 'POST' });
+                const data = await res.json();
+                showToast(data.message);
+            } catch (e) {
+                showToast("Failed to send WhatsApp report");
+            }
+        }
+
+        loadStatus();
+        loadData();
+        setInterval(loadStatus, 10000);
+    </script>
+</body>
+</html>
