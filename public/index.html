@@ -151,6 +151,12 @@
             font-weight: 700;
         }
 
+        .stat-subtext {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
         .countdown-accent {
             font-family: monospace;
             color: #38bdf8;
@@ -368,7 +374,7 @@
                 <div class="brand-icon">📊</div>
                 <div>
                     <h1>Winbox Live Casino Rebates</h1>
-                    <div class="subtitle">Express.js Powered Commission & Rebate Dashboard <span class="tz-badge">GMT+8 Malaysia</span></div>
+                    <div class="subtitle">Express.js Daily Clock Cron <span class="tz-badge">GMT+8 Malaysia Time</span></div>
                 </div>
             </div>
             <div class="header-actions">
@@ -388,14 +394,17 @@
                     </span>
                 </div>
                 <div class="stat-value" id="sys-status">Active</div>
+                <div class="stat-subtext">Daily Slots: 00:00 | 06:00 | 12:00 | 18:00</div>
             </div>
             <div class="stat-card">
-                <div class="stat-header">Next Scheduled Scrape</div>
+                <div class="stat-header">Next Fixed Slot Countdown</div>
                 <div class="stat-value countdown-accent" id="countdown-timer">--:--:--</div>
+                <div class="stat-subtext" id="target-time-sub">Target: --:--:-- (GMT+8)</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">Total Platforms</div>
                 <div class="stat-value" id="total-count">0</div>
+                <div class="stat-subtext">Scraped Live Casino Items</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
@@ -403,6 +412,7 @@
                     <span class="tz-badge">GMT+8</span>
                 </div>
                 <div class="stat-value" id="last-updated" style="font-size: 1.05rem;">-</div>
+                <div class="stat-subtext">Malaysia Standard Time</div>
             </div>
         </div>
 
@@ -450,6 +460,7 @@
         let rawData = [];
         let currentTab = 'featured';
         let nextRunTimestamp = null;
+        let nextRunFormatted = null;
         const featuredSet = new Set(['BG', 'CHOICE', 'DB CASINO', 'EVOLUTION', 'EZUGI', 'HOTROAD', 'PP LIVE', 'PRETTY GAMING', 'PT LIVE', 'SEXY']);
 
         async function loadStatus() {
@@ -470,6 +481,8 @@
                 document.getElementById('last-updated').innerText = data.scraper_info.last_run || 'Just now';
                 if (data.next_run_timestamp) {
                     nextRunTimestamp = data.next_run_timestamp;
+                    nextRunFormatted = data.next_run_formatted;
+                    document.getElementById('target-time-sub').innerText = `Target: ${data.next_run_formatted}`;
                 }
             } catch (e) {
                 console.error(e);

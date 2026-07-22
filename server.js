@@ -16,8 +16,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set default timezone process env
 process.env.TZ = 'Asia/Kuala_Lumpur';
 
-let nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
-
 let statusInfo = {
   last_run: null,
   last_status: 'Ready',
@@ -31,6 +29,52 @@ function formatMYTime(dateObj = new Date()) {
     dateStyle: 'medium',
     timeStyle: 'medium'
   });
+}
+
+// Calculate next fixed daily scheduled time: 00:00, 06:00, 12:00, 18:00 GMT+8
+function getNextFixedScheduledTime() {
+  const now = new Date();
+  const options = { timeZone: 'Asia/Kuala_Lumpur', hour12: false };
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    ...options,
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  });
+
+  const parts = formatter.formatToParts(now);
+  const getPart = type => parseInt(parts.find(p => p.type === type).value);
+
+  const year = getPart('year');
+  const month = getPart('month'); // 1-indexed
+  const day = getPart('day');
+  const currentHour = getPart('hour');
+
+  const scheduledHours = [0, 6, 12, 18];
+  let nextHour = scheduledHours.find(h => h > currentHour);
+
+  let targetDateObj = new Date(now);
+
+  if (nextHour === undefined) {
+    // Tomorrow at 00:00
+    nextHour = 0;
+    // Add 1 day
+    targetDateObj.setDate(targetDateObj.getDate() + 1);
+  }
+
+  // Format YYYY-MM-DD
+  const tParts = formatter.formatToParts(targetDateObj);
+  const tYear = tParts.find(p => p.type === 'year').value;
+  const tMonth = tParts.find(p => p.type === 'month').value.padStart(2, '0');
+  const tDay = tParts.find(p => p.type === 'day').value.padStart(2, '0');
+  const padHour = String(nextHour).padStart(2, '0');
+
+  // ISO string for Asia/Kuala_Lumpur (+08:00)
+  const targetIsoStr = `${tYear}-${tMonth}-${tDay}T${padHour}:00:00+08:00`;
+  return new Date(targetIsoStr);
 }
 
 function executePythonScraper() {
@@ -59,7 +103,6 @@ function executePythonScraper() {
       statusInfo.last_status = 'Success';
       statusInfo.last_run = formatMYTime();
       statusInfo.run_count += 1;
-      nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
       console.log('Python scraper completed successfully.');
     } else {
       statusInfo.last_status = `Failed with exit code ${code}`;
@@ -68,10 +111,9 @@ function executePythonScraper() {
   });
 }
 
-// Schedule cron every 6 hours in Asia/Kuala_Lumpur (GMT+8) timezone
-cron.schedule('0 */6 * * *', () => {
-  console.log(`[${formatMYTime()}] Triggering 6-hour scheduled rebate scrape (GMT+8)...`);
-  nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
+// Schedule cron at fixed daily hours: 00:00, 06:00, 12:00, 18:00 (GMT+8 Malaysia Time)
+cron.schedule('0 0,6,12,18 * * *', () => {
+  console.log(`[${formatMYTime()}] Triggering fixed 6-hour scheduled rebate scrape (00:00 / 06:00 / 12:00 / 18:00 GMT+8)...`);
   executePythonScraper();
 }, {
   scheduled: true,
@@ -85,14 +127,15 @@ app.get('/health', (req, res) => {
 
 // Status API
 app.get('/api/status', (req, res) => {
+  const nextTarget = getNextFixedScheduledTime();
   res.json({
     service: 'Winbox/SH Rebate Scraper Express Server',
     status: 'Online',
     timezone: 'GMT+8 (Asia/Kuala_Lumpur)',
     scraper_info: statusInfo,
-    next_run_timestamp: nextRunTime.getTime(),
-    next_run_formatted: formatMYTime(nextRunTime),
-    schedule: 'Every 6 hours (GMT+8)'
+    next_run_timestamp: nextTarget.getTime(),
+    next_run_formatted: formatMYTime(nextTarget),
+    fixed_schedule: '00:00, 06:00, 12:00, 18:00 (GMT+8)'
   });
 });
 
@@ -127,4 +170,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Express server listening on 0.0.0.0:${PORT} in GMT+8 (Asia/Kuala_Lumpur) timezone.`);
+  console.log(`Fixed Daily Schedule: 00:00 | 06:00 | 12:00 | 18:00 (GMT+8)`);
 });
