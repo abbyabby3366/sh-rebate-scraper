@@ -6,6 +6,7 @@ import time
 import json
 import os
 import requests
+from datetime import datetime, timezone, timedelta
 from playwright.sync_api import sync_playwright
 
 ALLOWED_PLATFORMS = {
@@ -19,6 +20,14 @@ ALLOWED_PLATFORMS = {
     "PRETTY GAMING",
     "PT LIVE",
     "SEXY"
+}
+
+STAR_PLATFORMS = {
+    "BG",
+    "HOTROAD",
+    "PRETTY GAMING",
+    "DB CASINO",
+    "PP LIVE"
 }
 
 def generate_totp(secret: str) -> str:
@@ -35,23 +44,79 @@ def generate_totp(secret: str) -> str:
     code = binary % 1000000
     return f"{code:06d}"
 
+def get_gmt8_timestamp() -> str:
+    tz = timezone(timedelta(hours=8))
+    now = datetime.now(tz)
+    return now.strftime("%d %b %Y, %I:%M %p (GMT+8)")
+
 def send_whatsapp_report(data, target_number="120363426571241502@g.us"):
     api_url = 'https://deswa.io7.my/api/external/send-message'
     
     # Filter data to keep only specified platforms
     filtered_data = [item for item in data if item["game_platform"].strip().upper() in ALLOWED_PLATFORMS]
     
-    lines = [
-        "📊 Winbox Live Casino Rebate List",
-        "----------------------------------------",
-        "Platform | Curr | Shareholder | Sup. Cash | Cash",
-        "----------------------------------------"
-    ]
-    
+    # Sort: Starred MYR items first, then highest total rebate descending, then platform/currency alphabetically
+    def sort_key(item):
+        plat_u = item["game_platform"].strip().upper()
+        curr_u = item["currency"].strip().upper()
+        is_starred = (plat_u in STAR_PLATFORMS) and (curr_u == "MYR")
+
+        try:
+            sh = float(item["shareholder"])
+        except (ValueError, TypeError):
+            sh = 0.0
+            
+        try:
+            sup = float(item["superior_cash_player"])
+        except (ValueError, TypeError):
+            sup = 0.0
+
+        try:
+            cash = float(item["cash_player"])
+        except (ValueError, TypeError):
+            cash = 0.0
+
+        row_total = sh + sup + cash
+        return (0 if is_starred else 1, -row_total, plat_u, curr_u)
+
+    filtered_data.sort(key=sort_key)
+
+    card_blocks = []
+
     for item in filtered_data:
-        lines.append(f"{item['game_platform']} | {item['currency']} | {item['shareholder']} | {item['superior_cash_player']} | {item['cash_player']}")
+        plat = item["game_platform"].strip()
+        plat_u = plat.upper()
+        curr = str(item['currency']).strip()
+
+        # Star only if platform is featured AND currency is MYR
+        is_starred = (plat_u in STAR_PLATFORMS) and (curr.upper() == "MYR")
+        prefix = "⭐ " if is_starred else ""
         
-    message_text = "\n".join(lines)
+        try:
+            sh = float(item["shareholder"])
+        except (ValueError, TypeError):
+            sh = 0.0
+            
+        try:
+            sup = float(item["superior_cash_player"])
+        except (ValueError, TypeError):
+            sup = 0.0
+
+        try:
+            cash = float(item["cash_player"])
+        except (ValueError, TypeError):
+            cash = 0.0
+
+        row_total = sh + sup + cash
+
+        # Omit % sign as requested
+        card = f"{prefix}{plat} ({curr}) {row_total:.1f}\n ├ {sh:.1f} | {sup:.1f} | {cash:.1f}"
+        card_blocks.append(card)
+
+    # Single newline separator (no extra blank lines)
+    cards_content = "\n".join(card_blocks)
+    timestamp_str = get_gmt8_timestamp()
+    message_text = f"📊 Winbox Live Casino Rebate List\n🕒 Updated: {timestamp_str}\n----------------------------------------\n{cards_content}"
     
     payload = {
         'number': target_number,
@@ -79,13 +144,21 @@ def run():
 
     with sync_playwright() as p:
         print(f"1. Launching browser (headless={headless_mode})...")
-        browser = p.chromium.launch(headless=headless_mode)
+        browser = p.chromium.launch(
+            headless=headless_mode,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu"
+            ]
+        )
         context = browser.new_context()
         page = context.new_page()
         
         print("2. Navigating to login page...")
-        page.goto("https://www.agent4u.cc/Account/Login")
-        page.wait_for_load_state("networkidle")
+        page.goto("https://www.agent4u.cc/Account/Login", wait_until="domcontentloaded", timeout=30000)
+        page.wait_for_selector("#UserName", timeout=15000)
         
         print("3. Filling username and password...")
         page.locator("#UserName").fill(username)
