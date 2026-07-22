@@ -1,0 +1,8 @@
+node_modules/
+__pycache__/
+*.pyc
+state.json
+login_result.png
+.env
+.idea/
+.vscode/
