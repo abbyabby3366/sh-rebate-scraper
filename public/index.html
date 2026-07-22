@@ -352,15 +352,12 @@
                 <div class="brand-icon">📊</div>
                 <div>
                     <h1>Winbox Live Casino Rebates</h1>
-                    <div class="subtitle">Real-time Commission & Rebate Rate Dashboard</div>
+                    <div class="subtitle">Express.js Powered Commission & Rebate Dashboard</div>
                 </div>
             </div>
             <div class="header-actions">
                 <button class="btn btn-primary" onclick="triggerScraper()">
                     ⚡ Run Scraper Now
-                </button>
-                <button class="btn" onclick="sendWhatsApp()">
-                    💬 Send to WhatsApp
                 </button>
             </div>
         </header>
@@ -369,9 +366,9 @@
         <div class="grid-stats">
             <div class="stat-card">
                 <div class="stat-header">
-                    <span>System Status</span>
+                    <span>Server Engine</span>
                     <span class="status-badge">
-                        <span class="pulse-dot"></span> Online
+                        <span class="pulse-dot"></span> Express.js
                     </span>
                 </div>
                 <div class="stat-value" id="sys-status">Active</div>
@@ -521,17 +518,6 @@
                 setTimeout(loadData, 8000);
             } catch (e) {
                 showToast("Failed to trigger scraper");
-            }
-        }
-
-        async function sendWhatsApp() {
-            showToast("💬 Sending report to WhatsApp...");
-            try {
-                const res = await fetch('/api/send-whatsapp', { method: 'POST' });
-                const data = await res.json();
-                showToast(data.message);
-            } catch (e) {
-                showToast("Failed to send WhatsApp report");
             }
         }
 
