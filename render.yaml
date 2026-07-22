@@ -1,7 +1,6 @@
 services:
-  - type: cron
-    name: sh-rebate-scraper
+  - type: web
+    name: sh-rebate-scraper-service
     env: docker
     dockerfilePath: ./Dockerfile
-    schedule: "0 */6 * * *"
     plan: free
