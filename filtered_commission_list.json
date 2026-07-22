@@ -1,0 +1,128 @@
+[
+  {
+    "game_platform": "BG",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "BG",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "CHOICE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "CHOICE",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "DB CASINO",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "DB CASINO",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "EVOLUTION",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "EVOLUTION",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "EZUGI",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "EZUGI",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "HOTROAD",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "HOTROAD",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PP LIVE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PRETTY GAMING",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PRETTY GAMING",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PT LIVE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "SEXY",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "SEXY",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  }
+]

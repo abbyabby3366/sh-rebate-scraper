@@ -31,7 +31,7 @@ function formatMYTime(dateObj = new Date()) {
   });
 }
 
-// Calculate next fixed daily scheduled time: 00:00, 06:00, 12:00, 18:00 GMT+8
+// Calculate next fixed daily scheduled time: 00:00, 12:00 GMT+8 (12:00 AM & 12:00 PM)
 function getNextFixedScheduledTime() {
   const now = new Date();
   const options = { timeZone: 'Asia/Kuala_Lumpur', hour12: false };
@@ -53,7 +53,7 @@ function getNextFixedScheduledTime() {
   const day = getPart('day');
   const currentHour = getPart('hour');
 
-  const scheduledHours = [0, 6, 12, 18];
+  const scheduledHours = [0, 12];
   let nextHour = scheduledHours.find(h => h > currentHour);
 
   let targetDateObj = new Date(now);
@@ -111,9 +111,9 @@ function executePythonScraper() {
   });
 }
 
-// Schedule cron at fixed daily hours: 00:00, 06:00, 12:00, 18:00 (GMT+8 Malaysia Time)
-cron.schedule('0 0,6,12,18 * * *', () => {
-  console.log(`[${formatMYTime()}] Triggering fixed 6-hour scheduled rebate scrape (00:00 / 06:00 / 12:00 / 18:00 GMT+8)...`);
+// Schedule cron at fixed daily hours: 12:00 AM (00:00) & 12:00 PM (12:00) GMT+8
+cron.schedule('0 0,12 * * *', () => {
+  console.log(`[${formatMYTime()}] Triggering scheduled rebate scrape (12:00 AM / 12:00 PM GMT+8)...`);
   executePythonScraper();
 }, {
   scheduled: true,
@@ -135,7 +135,7 @@ app.get('/api/status', (req, res) => {
     scraper_info: statusInfo,
     next_run_timestamp: nextTarget.getTime(),
     next_run_formatted: formatMYTime(nextTarget),
-    fixed_schedule: '00:00, 06:00, 12:00, 18:00 (GMT+8)'
+    fixed_schedule: '12:00 AM (00:00), 12:00 PM (12:00) (GMT+8)'
   });
 });
 
@@ -170,5 +170,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Express server listening on 0.0.0.0:${PORT} in GMT+8 (Asia/Kuala_Lumpur) timezone.`);
-  console.log(`Fixed Daily Schedule: 00:00 | 06:00 | 12:00 | 18:00 (GMT+8)`);
+  console.log(`Fixed Daily Schedule: 12:00 AM (00:00) | 12:00 PM (12:00) (GMT+8)`);
 });

@@ -1,0 +1,436 @@
+[
+  {
+    "game_platform": "9WICKETS",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "9WICKETS",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "ACE WIN",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "ACE WIN",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "ASKMESLOT",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "BG",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "BG",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "CHOICE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "CHOICE",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "CMD",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "DB CASINO",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "DB CASINO",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "EKOR",
+    "currency": "MYR",
+    "shareholder": 11,
+    "superior_cash_player": 1,
+    "cash_player": 1
+  },
+  {
+    "game_platform": "EKOR",
+    "currency": "USD",
+    "shareholder": 11,
+    "superior_cash_player": 1,
+    "cash_player": 1
+  },
+  {
+    "game_platform": "EVOLUTION",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "EVOLUTION",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "EZUGI",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "EZUGI",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "FACHAI",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "GOGOLI",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "HOTROAD",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "HOTROAD",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "JDB",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "JDB",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "JILI",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "JILI",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "KINGMIDAS",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "KINGMIDAS",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "LION KING",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "LION KING",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "LUCKY365",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "LUCKY365",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MARBLE X",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "MAX BET",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "MEGA88",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MEGA88",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MICROSLOT",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MICROSLOT",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MONKEYKING",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "MONKEYKING",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "NEXTSPIN",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "PLAY8",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "PLAY8",
+    "currency": "USD",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "POKER WIN",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PP LIVE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PRAGMATIC",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "PRAGMATIC",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "PRETTY GAMING",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PRETTY GAMING",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "PT LIVE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.4
+  },
+  {
+    "game_platform": "PT SLOT",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.2
+  },
+  {
+    "game_platform": "RCB988",
+    "currency": "MYR",
+    "shareholder": 0.5,
+    "superior_cash_player": 0.5,
+    "cash_player": 1
+  },
+  {
+    "game_platform": "RCB988",
+    "currency": "USD",
+    "shareholder": 0.5,
+    "superior_cash_player": 0.5,
+    "cash_player": 1
+  },
+  {
+    "game_platform": "SBO",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "SEXY",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "SEXY",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "SPADE",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "SPADE",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.2,
+    "cash_player": 0.6
+  },
+  {
+    "game_platform": "SV388",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.3
+  },
+  {
+    "game_platform": "SV388",
+    "currency": "USD",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.3
+  },
+  {
+    "game_platform": "TEXAS WIN",
+    "currency": "MYR",
+    "shareholder": 0.1,
+    "superior_cash_player": 0.1,
+    "cash_player": 0.5
+  },
+  {
+    "game_platform": "YGR",
+    "currency": "MYR",
+    "shareholder": 0.2,
+    "superior_cash_player": 0.3,
+    "cash_player": 0.6
+  }
+]
