@@ -10,4 +10,4 @@ COPY . .
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["python", "server.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--workers", "1", "--threads", "2", "--timeout", "120", "server:app"]
