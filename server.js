@@ -13,12 +13,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set default timezone process env
+process.env.TZ = 'Asia/Kuala_Lumpur';
+
+let nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
+
 let statusInfo = {
   last_run: null,
   last_status: 'Ready',
   is_running: false,
   run_count: 0
 };
+
+function formatMYTime(dateObj = new Date()) {
+  return dateObj.toLocaleString('en-MY', {
+    timeZone: 'Asia/Kuala_Lumpur',
+    dateStyle: 'medium',
+    timeStyle: 'medium'
+  });
+}
 
 function executePythonScraper() {
   if (statusInfo.is_running) {
@@ -28,7 +41,7 @@ function executePythonScraper() {
 
   statusInfo.is_running = true;
   statusInfo.last_status = 'Running...';
-  console.log(`[${new Date().toISOString()}] Starting python main.py scraper...`);
+  console.log(`[${formatMYTime()}] Starting python main.py scraper...`);
 
   const pyProcess = spawn('python', ['main.py']);
 
@@ -44,8 +57,9 @@ function executePythonScraper() {
     statusInfo.is_running = false;
     if (code === 0) {
       statusInfo.last_status = 'Success';
-      statusInfo.last_run = new Date().toLocaleString();
+      statusInfo.last_run = formatMYTime();
       statusInfo.run_count += 1;
+      nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
       console.log('Python scraper completed successfully.');
     } else {
       statusInfo.last_status = `Failed with exit code ${code}`;
@@ -54,15 +68,19 @@ function executePythonScraper() {
   });
 }
 
-// Schedule cron every 6 hours
+// Schedule cron every 6 hours in Asia/Kuala_Lumpur (GMT+8) timezone
 cron.schedule('0 */6 * * *', () => {
-  console.log('Triggering 6-hour scheduled rebate scrape...');
+  console.log(`[${formatMYTime()}] Triggering 6-hour scheduled rebate scrape (GMT+8)...`);
+  nextRunTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
   executePythonScraper();
+}, {
+  scheduled: true,
+  timezone: 'Asia/Kuala_Lumpur'
 });
 
 // Health check endpoint for Render
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy', timestamp: new Date() });
+  res.status(200).json({ status: 'healthy', timestamp: formatMYTime(), timezone: 'GMT+8 (Asia/Kuala_Lumpur)' });
 });
 
 // Status API
@@ -70,8 +88,11 @@ app.get('/api/status', (req, res) => {
   res.json({
     service: 'Winbox/SH Rebate Scraper Express Server',
     status: 'Online',
+    timezone: 'GMT+8 (Asia/Kuala_Lumpur)',
     scraper_info: statusInfo,
-    schedule: 'Every 6 hours'
+    next_run_timestamp: nextRunTime.getTime(),
+    next_run_formatted: formatMYTime(nextRunTime),
+    schedule: 'Every 6 hours (GMT+8)'
   });
 });
 
@@ -105,5 +126,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Express server listening on 0.0.0.0:${PORT}`);
+  console.log(`Express server listening on 0.0.0.0:${PORT} in GMT+8 (Asia/Kuala_Lumpur) timezone.`);
 });

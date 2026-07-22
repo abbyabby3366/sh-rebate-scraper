@@ -1,5 +1,9 @@
 FROM mcr.microsoft.com/playwright/python:v1.40.0-jammy
 
+# Set container timezone to Asia/Kuala_Lumpur (GMT+8 Malaysia Time)
+ENV TZ=Asia/Kuala_Lumpur
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Install Node.js 20 LTS in Ubuntu Playwright image
 RUN apt-get update && apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
